@@ -1,4 +1,4 @@
-package com.bang.shortlink.admin.controller.config;
+package com.bang.shortlink.admin.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
