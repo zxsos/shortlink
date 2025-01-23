@@ -1,4 +1,4 @@
-package com.bang.shortlink.admin.controller.config;
+package com.bang.shortlink.admin.config;
 
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
