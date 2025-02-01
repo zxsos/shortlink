@@ -7,6 +7,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 短链接接口层
  */
 
-
 public interface ShortLinkService extends IService<ShortLinkDO> {
 }

@@ -52,7 +52,7 @@ public class UserController {
      * @param requestParam
      * @return
      */
-    @PostMapping("/api/shortlink/v1/user")
+    @PostMapping("/api/shortlink/admin/v1/user")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
@@ -64,7 +64,7 @@ public class UserController {
      * @param requestParam
      * @return
      */
-    @PutMapping("/api/shortlink/v1/user")
+    @PutMapping("/api/shortlink/admin/v1/user")
     public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam) {
         userService.update(requestParam);
         return Results.success();
