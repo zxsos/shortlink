@@ -1,17 +1,14 @@
-package com.bang.shortlink.admin;
+package com.bang.shortlink.project;
+
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * 短链接后管应用
- *
- */
 @SpringBootApplication
-@MapperScan("com.bang.shortlink.admin.dao.mapper")
-public class ShortLinkAdminApplication {
+@MapperScan("com.bang.shortlink.project.dao.mapper")
+public class ShortLinkApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ShortLinkAdminApplication.class, args);
+        SpringApplication.run(ShortLinkApplication.class, args);
     }
 }

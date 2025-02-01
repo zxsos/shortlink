@@ -1,14 +1,17 @@
 package com.bang.shortlink.project.dao.entity;
 
-
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
-@TableName("t_link")
+/**
+ * 短链接实体
+ */
 @Data
-public class LinkDO {
+@TableName("t_link")
+public class ShortLinkDO {
     /**
      * id
      */
@@ -67,5 +70,50 @@ public class LinkDO {
     /**
      * 描述
      */
+    @TableField("`describe`")
     private String describe;
+
+    /**
+     * 网站标识
+     */
+    private String favicon;
+
+    /**
+     * 历史PV
+     */
+    private Integer totalPv;
+
+    /**
+     * 历史UV
+     */
+    private Integer totalUv;
+
+    /**
+     * 历史UIP
+     */
+    private Integer totalUip;
+
+    /**
+     * 今日PV
+     */
+    @TableField(exist = false)
+    private Integer todayPv;
+
+    /**
+     * 今日UV
+     */
+    @TableField(exist = false)
+    private Integer todayUv;
+
+    /**
+     * 今日UIP
+     */
+    @TableField(exist = false)
+    private Integer todayUip;
+
+    /**
+     * 删除时间
+     */
+    private Long delTime;
 }
+
