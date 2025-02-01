@@ -1,4 +1,4 @@
-package com.bang.shortlink.admin.util;
+package com.bang.shortlink.admin.toolkit;
 
 import java.security.SecureRandom;
 
