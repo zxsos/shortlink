@@ -2,14 +2,12 @@ package com.bang.shortlink.admin.controller;
 
 import com.bang.shortlink.admin.common.convention.result.Result;
 import com.bang.shortlink.admin.common.convention.result.Results;
-import com.bang.shortlink.admin.dto.req.ShortLinkGroupSaveReqDTo;
+import com.bang.shortlink.admin.dto.req.ShortLinkGroupSaveReqDTO;
+import com.bang.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import com.bang.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import com.bang.shortlink.admin.service.GroupService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,20 +22,34 @@ public class GroupController {
 
     /**
      * 新增短链接分组
+     *
      * @param requestParam
      * @return
      */
     @PostMapping("/api/shortlink/v1/group")
-    public Result<Void> save(@RequestBody ShortLinkGroupSaveReqDTo requestParam) {
+    public Result<Void> save(@RequestBody ShortLinkGroupSaveReqDTO requestParam) {
         groupService.saveGroup(requestParam.getName());
         return Results.success();
     }
 
+    /**
+     * 查询用户分组
+     *
+     * @return
+     */
+
     @GetMapping("/api/shortlink/v1/group")
-    public Result<List<ShortLinkGroupRespDTO>> listGroup()
-    {
+    public Result<List<ShortLinkGroupRespDTO>> listGroup() {
         return Results.success(groupService.listGroup());
     }
 
-
+    /**
+     * 修改用户分组
+     */
+    @PutMapping("/api/shortlink/v1/group")
+    public Result<Void> updateGroup(@RequestBody ShortLinkGroupUpdateReqDTO requestParam)
+    {
+        groupService.updateGroup(requestParam);
+        return Results.success();
+    }
 }

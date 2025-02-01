@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.bang.shortlink.admin.common.biz.user.UserContext;
 import com.bang.shortlink.admin.dao.entity.GroupDO;
 import com.bang.shortlink.admin.dao.mapper.GroupMapper;
+import com.bang.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import com.bang.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import com.bang.shortlink.admin.service.GroupService;
 import com.bang.shortlink.admin.util.RandomGenerator;
@@ -46,6 +47,17 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDO> implemen
                 .orderByDesc(GroupDO::getSortOrder,GroupDO::getUpdateTime);
         List<GroupDO> groupDOList = baseMapper.selectList(queryWrapper);
         return BeanUtil.copyToList(groupDOList,ShortLinkGroupRespDTO.class);
+    }
+
+    @Override
+    public void updateGroup(ShortLinkGroupUpdateReqDTO requestParam) {
+        LambdaQueryWrapper<GroupDO> updateWrapper = Wrappers.lambdaQuery(GroupDO.class)
+                .eq(GroupDO::getUsername, UserContext.getUsername())
+                .eq(GroupDO::getGid, requestParam.getGid())
+                .eq(GroupDO::getDelFlag, 0);
+        GroupDO groupDO=new GroupDO();
+        groupDO.setName(requestParam.getName());
+        baseMapper.update(groupDO,updateWrapper);
     }
 
     private boolean hasGid(String gid) {
