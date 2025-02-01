@@ -1,4 +1,4 @@
-package com.bang.shortlink.admin.config;
+package com.bang.shortlink.project.config;
 
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 public class RBloomFilterConfiguration {
 
     /**
-     * 防止用户注册查询数据库的布隆过滤器
+     * 防止短链接创建查询数据库
      */
     @Bean
-    public RBloomFilter<String> userRegisterCachePenetrationBloomFilter(RedissonClient redissonClient) {
+    public RBloomFilter<String> shortUriCreateCachePenetrationBloomFilter(RedissonClient redissonClient) {
         RBloomFilter<String> cachePenetrationBloomFilter = redissonClient.getBloomFilter("userRegisterCachePenetrationBloomFilter");
-        cachePenetrationBloomFilter.tryInit(1000000, 0.01);
+        cachePenetrationBloomFilter.tryInit(10000000, 0.01);
         return cachePenetrationBloomFilter;
     }
 }

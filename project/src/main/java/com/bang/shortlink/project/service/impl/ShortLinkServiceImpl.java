@@ -1,10 +1,18 @@
 package com.bang.shortlink.project.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.bang.shortlink.project.common.convention.exception.ServiceException;
 import com.bang.shortlink.project.dao.entity.ShortLinkDO;
 import com.bang.shortlink.project.dao.mapper.ShortLinkMapper;
+import com.bang.shortlink.project.dto.req.ShortLinkCreateReqDTO;
+import com.bang.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import com.bang.shortlink.project.service.ShortLinkService;
+import com.bang.shortlink.project.util.HashUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import groovy.util.logging.Slf4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBloomFilter;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +20,49 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class ShortLinkServiceImpl  extends ServiceImpl<ShortLinkMapper, ShortLinkDO>  implements ShortLinkService {
+@RequiredArgsConstructor
+public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLinkDO> implements ShortLinkService {
+
+    private final RBloomFilter<String> shortUriCreateCachePenetrationBloomFilter;
+
+    @Override
+    public ShortLinkCreateRespDTO createShortLink(ShortLinkCreateReqDTO requestParam) {
+        String shortLinkSuffix = generateSuffix(requestParam);
+        String fullShortUrl = requestParam.getDomain() + "/" + shortLinkSuffix;
+
+        ShortLinkDO shortLinkDO = BeanUtil.toBean(requestParam, ShortLinkDO.class);
+        shortLinkDO.setShortUri(shortLinkSuffix);
+        shortLinkDO.setEnableStatus(0);
+        shortLinkDO.setFullShortUrl(fullShortUrl);
+
+        try {
+            baseMapper.insert(shortLinkDO);
+        } catch (DuplicateKeyException ex) {
+            log.warn("短链接: {} 重复入库", fullShortUrl);
+            throw new ServiceException("短链接生成重复");
+        }
+        shortUriCreateCachePenetrationBloomFilter.add(shortLinkSuffix);
+        return ShortLinkCreateRespDTO.builder()
+                .fullShortUrl(shortLinkDO.getFullShortUrl())
+                .originUrl(requestParam.getOriginUrl())
+                .gid(requestParam.getGid()).build();
+    }
+
+
+    private String generateSuffix(ShortLinkCreateReqDTO requestParam) {
+        String originUrl = requestParam.getOriginUrl();
+        String shortUri;
+        int count = 0;
+        while (true) {
+            if (count > 10) {
+                throw new ServiceException("创建频繁,请稍后再试");
+            }
+            originUrl += System.currentTimeMillis();
+            shortUri = HashUtil.hashToBase62(originUrl);
+            if (!shortUriCreateCachePenetrationBloomFilter.contains(requestParam.getDomain() + "/" + shortUri)) break;
+            count++;
+        }
+        return shortUri;
+    }
 }
 
