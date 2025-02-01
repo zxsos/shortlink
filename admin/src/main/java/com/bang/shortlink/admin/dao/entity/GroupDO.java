@@ -36,6 +36,8 @@ public class GroupDO extends BaseDo {
      * 创建分组用户名
      */
     private String username;
-
-
+    /**
+     * 排序
+     */
+    private Integer sortOrder;
 }
