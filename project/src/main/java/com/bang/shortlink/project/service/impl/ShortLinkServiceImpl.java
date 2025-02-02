@@ -5,9 +5,14 @@ import com.bang.shortlink.project.common.convention.exception.ServiceException;
 import com.bang.shortlink.project.dao.entity.ShortLinkDO;
 import com.bang.shortlink.project.dao.mapper.ShortLinkMapper;
 import com.bang.shortlink.project.dto.req.ShortLinkCreateReqDTO;
+import com.bang.shortlink.project.dto.req.ShortLinkPageReqDTO;
 import com.bang.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
+import com.bang.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.bang.shortlink.project.service.ShortLinkService;
 import com.bang.shortlink.project.util.HashUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +51,17 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                 .fullShortUrl(shortLinkDO.getFullShortUrl())
                 .originUrl(requestParam.getOriginUrl())
                 .gid(requestParam.getGid()).build();
+    }
+
+    @Override
+    public IPage<ShortLinkPageRespDTO> pageShortLink(ShortLinkPageReqDTO requestParam) {
+        LambdaQueryWrapper<ShortLinkDO> queryWrapper = Wrappers.lambdaQuery(ShortLinkDO.class)
+                .eq(ShortLinkDO::getGid, requestParam.getGid())
+                .eq(ShortLinkDO::getDelFlag, 0)
+                .eq(ShortLinkDO::getEnableStatus, 0)
+                .orderByDesc(ShortLinkDO::getCreateTime);
+        IPage<ShortLinkDO> resultPage = baseMapper.selectPage(requestParam, queryWrapper);
+        return resultPage.convert(each -> BeanUtil.toBean(each, ShortLinkPageRespDTO.class));
     }
 
 

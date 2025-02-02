@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 短链接分组控制层
  */
-@RestController
+@RestController()
 @RequiredArgsConstructor
 public class GroupController {
 
@@ -64,7 +64,7 @@ public class GroupController {
     /**
      * 用户分组排序
      */
-    @PostMapping("/api/shortlink/admin/v1/group/sort")
+    @PostMapping("group/sort")
     public Result<Void> updateGroup(@RequestBody List<ShortLinkGroupSortReqDTO> requestParam) {
         groupService.sortGroup(requestParam);
         return Results.success();
