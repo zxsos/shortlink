@@ -1,4 +1,4 @@
-package com.bang.shortlink.project.dto.resp;
+package com.bang.shortlink.admin.remote.dto.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -10,7 +10,6 @@ import java.util.Date;
  */
 @Data
 public class ShortLinkPageRespDTO {
-
     /**
      * id
      */
