@@ -12,6 +12,7 @@ import com.bang.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.bang.shortlink.admin.dto.req.UserUpdateReqDTO;
 import com.bang.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.bang.shortlink.admin.dto.resp.UserRespDTO;
+import com.bang.shortlink.admin.service.GroupService;
 import com.bang.shortlink.admin.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -43,6 +44,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private final RedissonClient redissonClient;
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    private  final GroupService groupService;
 
     @Override
     public UserRespDTO getUserInfoByUsername(String username) {
@@ -78,6 +81,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                     throw new ClientException(UserErrorCodeEnum.USER_EXIST);
                 }
                 userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
+                groupService.saveGroup(requestParam.getUsername(),"默认分组");
+
                 return;
             }
             throw new ClientException(UserErrorCodeEnum.USER_NAME_EXIST);

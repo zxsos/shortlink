@@ -64,7 +64,7 @@ public class GroupController {
     /**
      * 用户分组排序
      */
-    @PostMapping("group/sort")
+    @PostMapping("/api/shortlink/admin/v1/group/sort")
     public Result<Void> updateGroup(@RequestBody List<ShortLinkGroupSortReqDTO> requestParam) {
         groupService.sortGroup(requestParam);
         return Results.success();

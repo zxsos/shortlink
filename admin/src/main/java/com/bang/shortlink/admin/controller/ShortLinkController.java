@@ -1,7 +1,7 @@
 package com.bang.shortlink.admin.controller;
 
 import com.bang.shortlink.admin.common.convention.result.Result;
-import com.bang.shortlink.admin.remote.dto.ShortLinkRemoteService;
+import com.bang.shortlink.admin.remote.ShortLinkRemoteService;
 import com.bang.shortlink.admin.remote.dto.req.ShortLinkCreateReqDTO;
 import com.bang.shortlink.admin.remote.dto.req.ShortLinkPageReqDTO;
 import com.bang.shortlink.admin.remote.dto.resp.ShortLinkCreateRespDTO;
