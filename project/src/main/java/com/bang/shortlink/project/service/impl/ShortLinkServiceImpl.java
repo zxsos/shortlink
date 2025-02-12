@@ -18,6 +18,7 @@ import com.bang.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.bang.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.bang.shortlink.project.service.ShortLinkService;
 import com.bang.shortlink.project.util.HashUtil;
+import com.bang.shortlink.project.util.LinkUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -41,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static com.bang.shortlink.project.common.constant.RedisKeyConstant.GOTO_SHORTLINK_KEY;
 import static com.bang.shortlink.project.common.constant.RedisKeyConstant.LOCK_GOTO_SHORTLINK_KEY;
@@ -81,6 +83,11 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
             log.warn("短链接: {} 重复入库", fullShortUrl);
             throw new ServiceException("短链接生成重复");
         }
+        stringRedisTemplate.opsForValue().set(
+                fullShortUrl,
+                requestParam.getOriginUrl(),
+                LinkUtil.getLinkCacheValidTime(requestParam.getValidDate()),
+                TimeUnit.MILLISECONDS);
         shortUriCreateCachePenetrationBloomFilter.add(fullShortUrl);
         return ShortLinkCreateRespDTO.builder()
                 .fullShortUrl("http://" + fullShortUrl)
