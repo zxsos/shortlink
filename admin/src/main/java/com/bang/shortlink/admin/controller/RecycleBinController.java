@@ -2,9 +2,10 @@ package com.bang.shortlink.admin.controller;
 
 import com.bang.shortlink.admin.common.convention.result.Result;
 import com.bang.shortlink.admin.common.convention.result.Results;
+import com.bang.shortlink.admin.dto.req.RecycleBinRecoverReqDTO;
+import com.bang.shortlink.admin.dto.req.RecycleBinRemoveReqDTO;
 import com.bang.shortlink.admin.dto.req.RecycleBinSaveReqDTO;
 import com.bang.shortlink.admin.remote.ShortLinkRemoteService;
-import com.bang.shortlink.admin.remote.dto.req.RecycleBinRecoverReqDTO;
 import com.bang.shortlink.admin.remote.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.bang.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
 import com.bang.shortlink.admin.service.RecycleBinService;
@@ -15,14 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 回收站管理层
+/*
+ * 回收站管理控制层
  */
 @RestController
 @RequiredArgsConstructor
 public class RecycleBinController {
 
     private final RecycleBinService recycleBinService;
+
     /**
      * 后续重构为 SpringCloud Feign 调用
      */
@@ -39,7 +41,7 @@ public class RecycleBinController {
     }
 
     /**
-     * 分页查询回收站
+     * 分页查询回收站短链接
      */
     @GetMapping("/api/shortlink/admin/v1/recycle-bin/page")
     public Result<IPage<ShortLinkPageRespDTO>> pageShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
@@ -52,6 +54,15 @@ public class RecycleBinController {
     @PostMapping("/api/shortlink/admin/v1/recycle-bin/recover")
     public Result<Void> recoverRecycleBin(@RequestBody RecycleBinRecoverReqDTO requestParam) {
         shortLinkRemoteService.recoverRecycleBin(requestParam);
+        return Results.success();
+    }
+
+    /**
+     * 移除短链接
+     */
+    @PostMapping("/api/shortlink/admin/v1/recycle-bin/remove")
+    public Result<Void> removeRecycleBin(@RequestBody RecycleBinRemoveReqDTO requestParam) {
+        shortLinkRemoteService.removeRecycleBin(requestParam);
         return Results.success();
     }
 }
