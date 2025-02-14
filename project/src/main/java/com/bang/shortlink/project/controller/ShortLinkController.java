@@ -22,7 +22,9 @@ import java.util.List;
 public class ShortLinkController {
     private final ShortLinkService shortLinkService;
 
-
+    /**
+     * 短链接跳转原始链接
+     */
     @GetMapping("/{short-uri}")
     public void restoreUrl(@PathVariable("short-uri") String shortUri, ServletRequest request, ServletResponse response) {
         shortLinkService.restoreUrl(shortUri, request, response);
@@ -47,7 +49,7 @@ public class ShortLinkController {
     }
 
     /**
-     * 分页
+     * 分页查询短链接
      */
     @GetMapping("/api/shortlink/v1/page")
     public Result<IPage<ShortLinkPageRespDTO>> pageShortLink(ShortLinkPageReqDTO requestParam) {
