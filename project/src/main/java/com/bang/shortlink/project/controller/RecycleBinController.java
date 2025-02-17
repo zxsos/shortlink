@@ -3,6 +3,7 @@ package com.bang.shortlink.project.controller;
 import com.bang.shortlink.project.common.convention.result.Result;
 import com.bang.shortlink.project.common.convention.result.Results;
 import com.bang.shortlink.project.dto.req.RecycleBinRecoverReqDTO;
+import com.bang.shortlink.project.dto.req.RecycleBinRemoveReqDTO;
 import com.bang.shortlink.project.dto.req.RecycleBinSaveReqDTO;
 import com.bang.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.bang.shortlink.project.dto.resp.ShortLinkPageRespDTO;
@@ -46,6 +47,14 @@ public class RecycleBinController {
     @PostMapping("/api/shortlink/v1/recycle-bin/recover")
     public Result<Void> recoverRecycleBin(@RequestBody RecycleBinRecoverReqDTO requestParam) {
         recycleBinService.recoverRecycleBin(requestParam);
+        return Results.success();
+    }
+    /**
+     * 移除短链接
+     */
+    @PostMapping("/api/shortlink/v1/recycle-bin/remove")
+    public Result<Void> removeRecycleBin(@RequestBody RecycleBinRemoveReqDTO requestParam) {
+        recycleBinService.removeRecycleBin(requestParam);
         return Results.success();
     }
 }

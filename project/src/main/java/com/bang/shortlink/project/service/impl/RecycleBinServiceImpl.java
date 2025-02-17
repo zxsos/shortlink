@@ -1,7 +1,7 @@
 package com.bang.shortlink.project.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.bang.shortlink.project.common.database.BaseDo;
+import com.bang.shortlink.project.common.database.BaseDO;
 import com.bang.shortlink.project.dao.entity.ShortLinkDO;
 import com.bang.shortlink.project.dao.mapper.ShortLinkMapper;
 import com.bang.shortlink.project.dto.req.RecycleBinRecoverReqDTO;
@@ -37,7 +37,7 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
                 .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
                 .eq(ShortLinkDO::getGid, requestParam.getGid())
                 .eq(ShortLinkDO::getEnableStatus, 0)
-                .eq(BaseDo::getDelFlag, 0);
+                .eq(BaseDO::getDelFlag, 0);
         ShortLinkDO shortLinkDO = ShortLinkDO.builder().enableStatus(1).build();
         baseMapper.update(shortLinkDO, updateWrapper);
         //删缓存
@@ -65,7 +65,7 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
                 .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
                 .eq(ShortLinkDO::getGid, requestParam.getGid())
                 .eq(ShortLinkDO::getEnableStatus, 1)
-                .eq(BaseDo::getDelFlag, 0);
+                .eq(BaseDO::getDelFlag, 0);
         ShortLinkDO shortLinkDO = ShortLinkDO.builder()
                 .enableStatus(0).build();
         baseMapper.update(shortLinkDO, updateWrapper);

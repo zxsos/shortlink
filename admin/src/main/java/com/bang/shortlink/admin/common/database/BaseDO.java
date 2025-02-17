@@ -10,7 +10,7 @@ import java.util.Date;
  * 数据库持久层基础参数
  */
 @Data
-public class BaseDo {
+public class BaseDO {
     /**
      * 创建时间
      */

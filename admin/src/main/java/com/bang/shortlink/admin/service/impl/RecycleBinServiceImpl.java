@@ -5,7 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.bang.shortlink.admin.common.biz.user.UserContext;
 import com.bang.shortlink.admin.common.convention.exception.ServiceException;
 import com.bang.shortlink.admin.common.convention.result.Result;
-import com.bang.shortlink.admin.common.database.BaseDo;
+import com.bang.shortlink.admin.common.database.BaseDO;
 import com.bang.shortlink.admin.dao.entity.GroupDO;
 import com.bang.shortlink.admin.dao.mapper.GroupMapper;
 import com.bang.shortlink.admin.remote.ShortLinkRemoteService;
@@ -44,7 +44,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     public Result<IPage<ShortLinkPageRespDTO>> pageRecycleBinShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
         LambdaQueryWrapper<GroupDO> queryWrapper = Wrappers.lambdaQuery(GroupDO.class)
                 .eq(GroupDO::getUsername, UserContext.getUsername())
-                .eq(BaseDo::getDelFlag, 0);
+                .eq(BaseDO::getDelFlag, 0);
         List<GroupDO> groupDOList = groupMapper.selectList(queryWrapper);
         if(CollUtil.isEmpty(groupDOList))
         {
