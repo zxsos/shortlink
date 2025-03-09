@@ -1,7 +1,7 @@
 package com.bang.shortlink.admin.dao.entity;
 
-import com.bang.shortlink.admin.common.database.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.bang.shortlink.admin.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 @TableName("t_group")
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class GroupDO extends BaseDO {
+
     /**
      * id
      */
@@ -32,13 +33,12 @@ public class GroupDO extends BaseDO {
     private String name;
 
     /**
-     * 用户名
+     * 创建分组用户名
      */
     private String username;
 
     /**
-     * 排序
+     * 分组排序
      */
     private Integer sortOrder;
-
 }

@@ -1,6 +1,5 @@
 package com.bang.shortlink.admin.common.convention.exception;
 
-
 import com.bang.shortlink.admin.common.convention.errorcode.BaseErrorCode;
 import com.bang.shortlink.admin.common.convention.errorcode.IErrorCode;
 

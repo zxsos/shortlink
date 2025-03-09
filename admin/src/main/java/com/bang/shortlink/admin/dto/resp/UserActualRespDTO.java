@@ -2,15 +2,17 @@ package com.bang.shortlink.admin.dto.resp;
 
 import lombok.Data;
 
-/*
- *用户响应DTO
+/**
+ * 用户返回参数响应
  */
 @Data
 public class UserActualRespDTO {
+
     /**
-     * ID
+     * id
      */
     private Long id;
+
     /**
      * 用户名
      */
@@ -20,13 +22,14 @@ public class UserActualRespDTO {
      * 真实姓名
      */
     private String realName;
+
     /**
      * 手机号
      */
     private String phone;
+
     /**
      * 邮箱
      */
     private String mail;
-
 }

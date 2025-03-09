@@ -3,7 +3,7 @@ package com.bang.shortlink.admin.dto.resp;
 import lombok.Data;
 
 /**
- * 分组返回实体
+ * 短链接分组返回实体对象
  */
 @Data
 public class ShortLinkGroupRespDTO {
@@ -19,13 +19,10 @@ public class ShortLinkGroupRespDTO {
     private String name;
 
     /**
-     * 创建分组用户名
-     */
-    private String username;
-    /**
-     * 排序
+     * 分组排序
      */
     private Integer sortOrder;
+
     /**
      * 分组下短链接数量
      */

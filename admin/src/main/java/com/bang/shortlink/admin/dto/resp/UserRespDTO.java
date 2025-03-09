@@ -1,32 +1,36 @@
 package com.bang.shortlink.admin.dto.resp;
 
-import com.bang.shortlink.admin.common.serialize.PhoneDesensitizationSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.bang.shortlink.admin.common.serialize.PhoneDesensitizationSerializer;
 import lombok.Data;
 
-/*
- *用户响应DTO
+/**
+ * 用户返回参数响应
  */
 @Data
 public class UserRespDTO {
 
     /**
-     * ID
+     * id
      */
     private Long id;
+
     /**
      * 用户名
      */
     private String username;
+
     /**
      * 真实姓名
      */
     private String realName;
+
     /**
      * 手机号
      */
     @JsonSerialize(using = PhoneDesensitizationSerializer.class)
     private String phone;
+
     /**
      * 邮箱
      */

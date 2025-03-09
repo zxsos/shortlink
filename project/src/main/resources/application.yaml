@@ -1,14 +1,11 @@
 server:
   port: 8001
 
-
-
 spring:
+  application:
+    name: shortlink-project
   datasource:
-    # ShardingSphere 对 Driver 自定义，实现分库分表等隐藏逻辑
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
-    # ShardingSphere 配置文件路径
-#    url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
     url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
   data:
     redis:
@@ -17,11 +14,29 @@ spring:
   mvc:
     view:
       prefix: /templates/
-      suffix: .html
-
-
+      suffix: .
+  cloud:
+    nacos:
+      discovery:
+        server-addr:  127.0.0.1:8848
 
 shortlink:
+  domain:
+    default: shortlink.uno
   stats:
     locale:
       amap-key: a5c1fd0670e723a9f2fe96497ad17c90
+  goto-domain:
+    white-list:
+      enable: false
+      names: 'github,知乎,掘金,博客园'
+      details:
+        - github.com
+        - zhihu.com
+        - juejin.cn
+        - cnblogs.com
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml

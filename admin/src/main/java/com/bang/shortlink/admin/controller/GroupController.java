@@ -8,14 +8,20 @@ import com.bang.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import com.bang.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import com.bang.shortlink.admin.service.GroupService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
  * 短链接分组控制层
  */
-@RestController()
+@RestController
 @RequiredArgsConstructor
 public class GroupController {
 
@@ -23,9 +29,6 @@ public class GroupController {
 
     /**
      * 新增短链接分组
-     *
-     * @param requestParam
-     * @return
      */
     @PostMapping("/api/shortlink/admin/v1/group")
     public Result<Void> save(@RequestBody ShortLinkGroupSaveReqDTO requestParam) {
@@ -34,18 +37,15 @@ public class GroupController {
     }
 
     /**
-     * 查询用户分组
-     *
-     * @return
+     * 查询短链接分组集合
      */
-
     @GetMapping("/api/shortlink/admin/v1/group")
     public Result<List<ShortLinkGroupRespDTO>> listGroup() {
         return Results.success(groupService.listGroup());
     }
 
     /**
-     * 修改用户分组
+     * 修改短链接分组名称
      */
     @PutMapping("/api/shortlink/admin/v1/group")
     public Result<Void> updateGroup(@RequestBody ShortLinkGroupUpdateReqDTO requestParam) {
@@ -61,11 +61,12 @@ public class GroupController {
         groupService.deleteGroup(gid);
         return Results.success();
     }
+
     /**
-     * 用户分组排序
+     * 排序短链接分组
      */
     @PostMapping("/api/shortlink/admin/v1/group/sort")
-    public Result<Void> updateGroup(@RequestBody List<ShortLinkGroupSortReqDTO> requestParam) {
+    public Result<Void> sortGroup(@RequestBody List<ShortLinkGroupSortReqDTO> requestParam) {
         groupService.sortGroup(requestParam);
         return Results.success();
     }

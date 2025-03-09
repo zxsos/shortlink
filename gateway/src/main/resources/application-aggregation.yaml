@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: shortlink-admin-aggregation
+          uri: lb://shortlink-aggregation/api/shortlink/admin/**
+          predicates:
+            - Path=/api/shortlink/admin/**
+          filters:
+            - name: TokenValidate
+              args:
+                whitePathList:
+                  - /api/shortlink/admin/v1/user/login
+                  - /api/shortlink/admin/v1/user/has-username
+
+        - id: shortlink-project-aggregation
+          uri: lb://shortlink-aggregation/api/shortlink/**
+          predicates:
+            - Path=/api/shortlink/**
+          filters:
+            - name: TokenValidate

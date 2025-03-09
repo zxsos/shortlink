@@ -1,2 +1,19 @@
 server:
-  port: 8003
+  port: 8000
+spring:
+  application:
+    name: shortlink-gateway
+  profiles:
+    active: aggregation
+    #active: dev
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+        username: 'nacos'
+        password: 'nacos'
