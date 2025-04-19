@@ -1,0 +1,65 @@
+server:
+  port: 8003
+
+spring:
+  application:
+    name: shortlink-aggregation
+  datasource:
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: 123456
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+        username: 'nacos'
+        password: 'nacos'
+
+aggregation:
+  remote-url: http://127.0.0.1:${server.port}
+
+shortlink:
+  group:
+    max-num: 20
+  flow-limit:
+    enable: true
+    time-window: 1
+    max-access-count: 20
+  domain:
+    default: s.shortlink.uno
+  demo-mode:
+    enable: false
+    blacklist:
+      - /api/shortlink/admin/v1/group
+      - /api/shortlink/admin/v1/recycle-bin/remove
+      - /api/shortlink/admin/v1/create
+      - /api/shortlink/admin/v1/create/batch
+      - /api/shortlink/admin/v1/update
+      - /api/shortlink/admin/v1/user
+      - /api/shortlink/admin/v1/user/logout
+      - /api/shortlink/admin/v1/recycle-bin/save
+  stats:
+    locale:
+      amap-key: a5c1fd0670e723a9f2fe96497ad17c90
+  goto-domain:
+    white-list:
+      enable: false
+      names: 'github,知乎,掘金,博客园'
+      details:
+        - github.com
+        - zhihu.com
+        - juejin.cn
+        - cnblogs.com
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
